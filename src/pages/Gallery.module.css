@@ -1,0 +1,170 @@
+.container { display:flex; flex-direction:column; gap:16px; }
+
+.header { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
+.title { font-size:1.4rem; font-weight:700; }
+
+/* Filter row — liquid glass */
+.filterRow {
+  display:flex; gap:4px;
+  background:
+    radial-gradient(ellipse at 50% 0%, var(--glass-highlight) 0%, transparent 60%),
+    var(--glass-warm-bg);
+  backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border:1px solid var(--glass-border);
+  border-radius:10px; padding:3px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.03);
+}
+.fBtn { padding:6px 13px; border-radius:8px; font-size:0.75rem; font-weight:500; color:var(--text-secondary); transition:all 0.2s ease; border:1px solid transparent; }
+.fBtn:hover { color:var(--text-primary); background:rgba(255,255,255,0.25); }
+.fBtn:active { background:rgba(0,0,0,0.04); transition:all 0.08s ease; }
+.fActive {
+  background:
+    radial-gradient(ellipse at 50% 0%, var(--glass-highlight) 0%, transparent 55%),
+    var(--glass-warm-bg);
+  backdrop-filter:blur(20px) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter:blur(20px) saturate(var(--glass-saturate));
+  border:1px solid var(--glass-border);
+  color:var(--color-primary); font-weight:500;
+  box-shadow:0 2px 6px rgba(0,0,0,0.04), inset 0 1px 0 var(--glass-highlight);
+}
+
+.empty { text-align:center; padding:60px 20px; }
+.empty p { font-size:0.95rem; color:var(--text-secondary); }
+.emptyHint { font-size:0.78rem; color:var(--text-tertiary); margin-top:6px; }
+
+.masonry { display:flex; flex-direction:column; gap:20px; }
+
+.dayGroup { }
+.dayLabel {
+  font-size:0.85rem; font-weight:600; margin-bottom:10px;
+  display:flex; align-items:center; gap:8px;
+}
+.dayCount { font-size:0.7rem; font-weight:400; color:var(--color-primary); }
+
+.cardGrid { display:grid; grid-template-columns:repeat(auto-fill, minmax(180px,1fr)); gap:10px; }
+
+.foodCard {
+  /* Liquid glass card */
+  background:
+    radial-gradient(ellipse at 50% 0%, var(--glass-highlight) 0%, transparent 60%),
+    var(--glass-warm-bg);
+  backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border:1px solid var(--glass-border);
+  border-radius:var(--radius-md); overflow:hidden;
+  box-shadow:0 2px 8px rgba(0,0,0,0.03), inset 0 1px 0 var(--glass-highlight);
+  transition:box-shadow 0.2s ease;
+}
+.foodCard:hover { transform:translateY(-2px); box-shadow:0 4px 16px rgba(0,0,0,0.06), inset 0 1px 0 var(--glass-highlight); }
+
+.cardImg {
+  width:100%; aspect-ratio:4/3; object-fit:cover;
+  filter: drop-shadow(0 0 2px rgba(255,255,255,0.7)) drop-shadow(1px 1px 3px rgba(0,0,0,0.1));
+}
+.cardPlaceholder {
+  width:100%; aspect-ratio:4/3;
+  display:flex; align-items:center; justify-content:center;
+  background:var(--bg-calendar);
+}
+.cardBody { padding:10px 12px; display:flex; flex-direction:column; gap:4px; }
+.cardTop { display:flex; justify-content:space-between; align-items:center; }
+.favBtn { font-size:0.85rem; padding:0 2px; transition:transform 0.1s; }
+.favBtn:hover { transform:scale(1.2); }
+.favActive { }
+.cardTag { display:inline-block; align-self:flex-start; padding:1px 7px; border-radius:4px; font-size:0.62rem; font-weight:600; color:#fff; }
+.cardName { font-size:0.83rem; font-weight:500; }
+.cardCal { font-size:0.73rem; color:var(--text-secondary); font-family:var(--font-mono); }
+
+/* Context menu — liquid glass */
+.ctxMenu {
+  position:fixed; z-index:var(--z-modal);
+  min-width:160px; padding:6px;
+  background:
+    radial-gradient(ellipse at 50% 0%, var(--glass-highlight) 0%, transparent 60%),
+    var(--glass-warm-bg);
+  backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border:1px solid var(--glass-border);
+  border-radius:12px;
+  box-shadow:0 8px 24px rgba(0,0,0,0.06);
+  display:flex; flex-direction:column; gap:2px;
+  animation:ctxIn 0.15s ease;
+}
+@keyframes ctxIn { from{opacity:0;transform:scale(0.96)}to{opacity:1;transform:scale(1)}}
+
+.ctxItem {
+  padding:10px 14px; border-radius:8px; font-size:0.83rem;
+  color:var(--text-primary); cursor:pointer; transition:background 0.15s;
+}
+.ctxItem:hover { background:var(--bg-hover); }
+
+.ctxDivider { height:1px; background:var(--border-subtle); margin:2px 8px; }
+
+.ctxDanger {
+  padding:10px 14px; border-radius:8px; font-size:0.83rem;
+  color:var(--error); cursor:pointer; transition:background 0.15s;
+}
+.ctxDanger:hover { background:rgba(248,113,113,0.06); }
+
+/* Detail modal — liquid glass */
+.overlay {
+  position:fixed; inset:0; z-index:var(--z-modal);
+  background:rgba(0,0,0,0.6); display:flex; align-items:center; justify-content:center;
+}
+.detailModal {
+  position:relative; max-width:520px; width:90%; max-height:85vh; overflow-y:auto;
+  background:
+    radial-gradient(ellipse at 50% 0%, var(--glass-highlight) 0%, transparent 60%),
+    var(--glass-warm-bg);
+  backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border:1px solid var(--glass-border);
+  border-radius:20px;
+  box-shadow:0 12px 40px rgba(0,0,0,0.10);
+  display:flex; flex-direction:column;
+  animation:ctxIn 0.2s ease;
+}
+.detailClose {
+  position:absolute; top:12px; right:12px; z-index:2;
+  width:32px; height:32px; border-radius:50%;
+  background:rgba(0,0,0,0.4); color:#fff;
+  display:flex; align-items:center; justify-content:center;
+}
+.detailImgWrap { width:100%; }
+.detailImg {
+  width:100%; max-height:350px; object-fit:cover;
+  border-radius:20px 20px 0 0;
+}
+.detailPlaceholder {
+  width:100%; height:250px; display:flex; align-items:center; justify-content:center;
+  border-radius:20px 20px 0 0;
+}
+.detailBody { padding:20px; display:flex; flex-direction:column; gap:10px; }
+.detailTag { display:inline-block; align-self:flex-start; padding:3px 10px; border-radius:5px; font-size:0.7rem; font-weight:600; color:#fff; }
+.detailName { font-size:1.2rem; font-weight:700; }
+.detailMeta { font-size:0.85rem; color:var(--text-secondary); display:flex; gap:6px; }
+.detailInfo { display:flex; flex-direction:column; gap:6px; margin-top:4px; }
+.detailRow { display:flex; justify-content:space-between; font-size:0.83rem; padding:6px 0; border-bottom:1px solid var(--border-subtle); }
+.detailActions { display:flex; gap:10px; margin-top:8px; }
+.detailDel {
+  flex:1; padding:12px; border-radius:10px; font-size:0.85rem;
+  color:var(--error); border:1px solid rgba(248,113,113,0.3);
+  transition:all 0.15s;
+}
+.detailDel:hover { background:rgba(248,113,113,0.06); }
+
+@media (max-width:768px) {
+  .header { flex-direction:column; gap:8px; align-items:flex-start; }
+  .title { font-size:1.2rem; }
+  .filterRow { flex-wrap:wrap; }
+  .fBtn { padding:5px 10px; font-size:0.7rem; }
+  .cardGrid { grid-template-columns:repeat(2,1fr); gap:8px; }
+  .dayLabel { font-size:0.8rem; }
+}
+
+@media (max-width:480px) {
+  .title { font-size:1.1rem; }
+  .cardGrid { gap:6px; }
+  .cardPlaceholder { aspect-ratio:1/1; }
+}

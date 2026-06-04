@@ -1,0 +1,177 @@
+.container { display:flex; flex-direction:column; gap:16px; }
+
+.header { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
+.title { font-size:1.4rem; font-weight:700; }
+.headerRight { display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+
+/* Tabs — liquid glass */
+.tabs {
+  display:flex; gap:0;
+  background:
+    radial-gradient(ellipse at 50% 0%, var(--glass-highlight) 0%, transparent 60%),
+    var(--glass-warm-bg);
+  backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border:1px solid var(--glass-border);
+  border-radius:10px; padding:3px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.03);
+}
+.tab {
+  padding:7px 16px; border-radius:8px; font-size:0.8rem; font-weight:500;
+  color:var(--text-secondary); transition:all 0.2s ease;
+  border:1px solid transparent;
+}
+.tab:hover { color:var(--text-primary); background:rgba(255,255,255,0.25); }
+.tab:active { background:rgba(0,0,0,0.04); transition:all 0.08s ease; }
+.tabActive {
+  background:
+    radial-gradient(ellipse at 50% 0%, var(--glass-highlight) 0%, transparent 55%),
+    var(--glass-warm-bg);
+  backdrop-filter:blur(20px) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter:blur(20px) saturate(var(--glass-saturate));
+  border:1px solid var(--glass-border);
+  color:var(--color-primary); font-weight:500;
+  box-shadow:0 2px 6px rgba(0,0,0,0.04), inset 0 1px 0 var(--glass-highlight);
+}
+
+.exportWrap { position:relative; }
+.exportBtn {
+  padding:7px 16px; border-radius:10px; font-size:0.8rem; font-weight:500;
+  background:
+    radial-gradient(ellipse at 50% 0%, var(--glass-highlight) 0%, transparent 60%),
+    var(--glass-warm-bg);
+  backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border:1px solid var(--glass-border);
+  color:var(--text-secondary); transition:all 0.2s ease; cursor:pointer;
+  box-shadow:0 2px 6px rgba(0,0,0,0.03);
+}
+.exportBtn:hover { color:var(--color-primary); box-shadow:0 4px 12px rgba(0,0,0,0.06); }
+.exportBtn:active { background:rgba(0,0,0,0.04); transition:all 0.08s ease; }
+
+.exportMenu {
+  position:absolute; top:100%; right:0; margin-top:4px; z-index:20;
+  min-width:180px; padding:6px;
+  background:
+    radial-gradient(ellipse at 50% 0%, var(--glass-highlight) 0%, transparent 60%),
+    var(--glass-warm-bg);
+  backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border:1px solid var(--glass-border);
+  border-radius:12px;
+  box-shadow:0 8px 24px rgba(0,0,0,0.06);
+  display:flex; flex-direction:column; gap:2px;
+}
+.exportMenu button {
+  width:100%; padding:10px 14px; border-radius:8px;
+  font-size:0.83rem; color:var(--text-primary); text-align:left;
+  transition:background 0.15s;
+}
+.exportMenu button:hover { background:var(--bg-hover); }
+
+/* Summary cards — liquid glass */
+.summaryRow { display:grid; grid-template-columns:repeat(4,1fr); gap:12px; }
+.sumCard {
+  padding:16px; border-radius:var(--radius-md);
+  background:
+    radial-gradient(ellipse at 50% 0%, var(--glass-highlight) 0%, transparent 60%),
+    var(--glass-warm-bg);
+  backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border:1px solid var(--glass-border);
+  box-shadow:0 2px 8px rgba(0,0,0,0.03), inset 0 1px 0 var(--glass-highlight);
+  display:flex; flex-direction:column; gap:4px;
+}
+.sumVal { font-size:1.5rem; font-weight:700; font-family:var(--font-mono); color:var(--color-primary); }
+.sumLbl { font-size:0.75rem; color:var(--text-secondary); }
+
+/* Filter tags — liquid glass */
+.filterTags { display:flex; gap:6px; flex-wrap:wrap; }
+.fTag {
+  padding:5px 14px; border-radius:10px; font-size:0.78rem; font-weight:500;
+  color:var(--text-secondary);
+  background:
+    radial-gradient(ellipse at 50% 0%, var(--glass-highlight) 0%, transparent 60%),
+    var(--glass-warm-bg);
+  backdrop-filter:blur(20px) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter:blur(20px) saturate(var(--glass-saturate));
+  border:1px solid transparent;
+  transition:all 0.2s ease;
+}
+.fTag:hover { color:var(--text-primary); box-shadow:0 2px 8px rgba(0,0,0,0.04); }
+.fTag:active { background:rgba(0,0,0,0.04); transition:all 0.08s ease; }
+.fTagActive {
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(232,150,106,0.15) 0%, transparent 55%),
+    var(--glass-warm-bg);
+  color:var(--color-primary); border-color:rgba(232,150,106,0.20); font-weight:500;
+}
+
+/* Chart cards — liquid glass */
+.chartRow { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.chartCard {
+  padding:18px; border-radius:var(--radius-md);
+  background:
+    radial-gradient(ellipse at 50% 0%, var(--glass-highlight) 0%, transparent 60%),
+    var(--glass-warm-bg);
+  backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border:1px solid var(--glass-border);
+  box-shadow:0 2px 8px rgba(0,0,0,0.03), inset 0 1px 0 var(--glass-highlight);
+}
+.chartCard h3 { font-size:0.9rem; font-weight:600; margin-bottom:12px; }
+.chartWrap { }
+.noData { text-align:center; padding:40px 0; color:var(--text-tertiary); font-size:0.85rem; }
+
+/* Recharts tooltip visibility fix */
+:global(.recharts-tooltip-label) { color:var(--text-primary) !important; }
+:global(.recharts-tooltip-item) { color:var(--text-secondary) !important; }
+:global(.recharts-tooltip-item-list) { color:var(--text-primary) !important; }
+:global(.recharts-default-tooltip) { background:var(--bg-card) !important; border:1px solid var(--border-card) !important; border-radius:8px !important; }
+
+/* Table */
+.tableHeader { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+.searchInput {
+  padding:6px 12px; border-radius:8px; font-size:0.8rem;
+  background:var(--bg-input); border:1px solid var(--border-card);
+  width:200px; transition:border-color 0.15s;
+}
+.searchInput:focus { border-color:var(--color-primary); }
+
+.tableWrap { overflow-x:auto; }
+.table { width:100%; border-collapse:collapse; font-size:0.83rem; }
+.table th {
+  text-align:left; padding:10px 12px; border-bottom:1px solid var(--border-card);
+  font-weight:600; color:var(--text-secondary); font-size:0.75rem;
+}
+.table td { padding:9px 12px; border-bottom:1px solid var(--border-subtle); }
+.table tbody tr:hover { background:var(--bg-hover); }
+.sortable { cursor:pointer; user-select:none; }
+.sortable:hover { color:var(--color-primary); }
+.tdDate { color:var(--text-secondary); font-family:var(--font-mono); font-size:0.78rem; white-space:nowrap; }
+.tdCal { font-family:var(--font-mono); color:var(--text-secondary); font-size:0.8rem; }
+.catBadge { padding:2px 8px; border-radius:4px; font-size:0.7rem; font-weight:600; }
+
+@media (max-width:1024px) {
+  .summaryRow { grid-template-columns:repeat(2,1fr); }
+  .chartRow { grid-template-columns:1fr; }
+}
+@media (max-width:768px) {
+  .header { flex-direction:column; gap:8px; }
+  .headerRight { width:100%; justify-content:space-between; }
+  .title { font-size:1.2rem; }
+  .summaryRow { grid-template-columns:repeat(2,1fr); gap:8px; }
+  .filterTags { gap:4px; }
+  .fTag { padding:4px 10px; font-size:0.72rem; }
+}
+@media (max-width:480px) {
+  .title { font-size:1.1rem; }
+  .summaryRow { grid-template-columns:1fr 1fr; gap:6px; }
+  .sumCard { padding:12px; }
+  .sumVal { font-size:1.2rem; }
+  .tabs { }
+  .tab { padding:6px 12px; font-size:0.75rem; }
+  .exportBtn { font-size:0.75rem; padding:6px 12px; }
+  .table td, .table th { padding:6px 8px; font-size:0.75rem; }
+  .searchInput { width:140px; }
+}

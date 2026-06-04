@@ -1,0 +1,113 @@
+.sidebar {
+  position:fixed; top:var(--topnav-height); left:0; bottom:0;
+  width:var(--sidebar-width); padding:16px;
+  display:flex; flex-direction:column; gap:4px;
+  overflow-y:auto; z-index:var(--z-sidebar);
+  transition:transform 0.25s ease;
+  /* Warm milk brown liquid glass — multi-layer depth */
+  background:
+    radial-gradient(ellipse at 50% 0%, var(--glass-highlight) 0%, transparent 55%),
+    var(--glass-warm-bg);
+  backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border-right:1px solid var(--glass-border);
+  box-shadow:0 4px 24px rgba(0,0,0,0.04);
+}
+/* Chromatic aberration top edge */
+.sidebar::after {
+  content:''; position:absolute; top:0; left:8%; right:8%; height:1.5px;
+  background:var(--glass-chromatic);
+  pointer-events:none; opacity:0.55; border-radius:2px;
+}
+
+.userCard {
+  display:flex; align-items:center; gap:12px;
+  padding:14px; border-radius:var(--radius-md);
+  background:
+    radial-gradient(ellipse at 50% 0%, var(--glass-highlight) 0%, transparent 60%),
+    var(--glass-warm-bg);
+  backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border:1px solid var(--glass-border);
+  box-shadow:
+    0 4px 20px rgba(0,0,0,0.04),
+    inset 0 1px 0 var(--glass-highlight);
+  margin-bottom:8px;
+  position:relative; overflow:hidden;
+}
+.userCard::after {
+  content:''; position:absolute; top:0; left:10%; right:10%; height:1.5px;
+  background:var(--glass-chromatic);
+  pointer-events:none; opacity:0.45; border-radius:2px;
+}
+.userCard .glare {
+  position:absolute; inset:0; pointer-events:none; z-index:1;
+  opacity:var(--glare-o,0);
+  background:
+    radial-gradient(ellipse at var(--glare-x,50%) var(--glare-y,50%),
+      rgba(255,255,255,0.22) 0%,
+      rgba(255,255,255,0.08) 25%,
+      transparent 55%
+    );
+  transition:opacity 0.5s cubic-bezier(0.22,0.61,0.36,1);
+  mix-blend-mode:overlay;
+}
+.userAvatar {
+  width:44px; height:44px; border-radius:50%; flex-shrink:0;
+  background:linear-gradient(135deg, #F2C080, #E0A040);
+  color:#fff; display:flex; align-items:center; justify-content:center;
+  font-size:1.1rem; font-weight:700; overflow:hidden;
+}
+.avatarImg { width:100%; height:100%; object-fit:cover; }
+.userName { font-size:0.9rem; font-weight:600; }
+.userBio { font-size:0.72rem; color:var(--text-secondary); margin-top:1px; }
+
+.menu { display:flex; flex-direction:column; gap:2px; }
+
+.menuItem {
+  display:flex; align-items:center; gap:10px;
+  padding:10px 12px; border-radius:10px;
+  font-size:0.85rem; color:var(--text-secondary);
+  text-align:left; transition:background 0.2s ease, color 0.2s ease;
+}
+.menuItem:hover { background:var(--bg-hover); color:var(--text-primary); }
+.menuActive {
+  background:
+    radial-gradient(ellipse at 50% 0%, var(--glass-highlight) 0%, transparent 50%),
+    var(--glass-warm-bg);
+  backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border:1px solid var(--glass-border);
+  box-shadow:
+    0 4px 16px rgba(0,0,0,0.06),
+    0 2px 8px rgba(0,0,0,0.04),
+    inset 0 1px 0 var(--glass-highlight),
+    inset 0 -1px 0 rgba(0,0,0,0.02);
+  color:var(--color-primary); font-weight:600;
+  transform:none; position:relative;
+}
+/* Chromatic aberration edge for active menu */
+.menuActive::before {
+  content:''; position:absolute; top:0; left:12%; right:12%; height:1px;
+  background:var(--glass-chromatic);
+  pointer-events:none; opacity:0.5; border-radius:2px;
+}
+.menuIcon { font-size:1.1rem; width:24px; text-align:center; flex-shrink:0; }
+
+.sidebarDivider { height:1px; background:var(--border-subtle); margin:8px 0; }
+
+.postButton {
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  margin-top:auto; padding:14px; border-radius:14px;
+  background:linear-gradient(135deg, var(--color-primary), #FF7B42);
+  color:#fff; font-size:0.9rem; font-weight:600;
+  box-shadow:0 4px 16px rgba(255,159,105,0.25);
+  transition:transform 0.15s, box-shadow 0.15s;
+}
+.postButton:hover { transform:translateY(-1px); box-shadow:0 6px 20px rgba(255,159,105,0.35); }
+.postButton:active { transform:translateY(0); }
+
+@media (max-width:1024px) {
+  .sidebar { transform:translateX(-100%); }
+  .sidebar.open { transform:translateX(0); }
+}

@@ -1,0 +1,105 @@
+.container { display:flex; flex-direction:column; gap:16px; }
+.title { font-size:1.4rem; font-weight:700; }
+
+.empty { text-align:center; padding:80px 20px; }
+.empty p { font-size:1rem; color:var(--text-secondary); }
+.hint { font-size:0.8rem; color:var(--text-tertiary); margin-top:6px; }
+
+.grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:12px; }
+
+.card {
+  /* Liquid glass card */
+  background:
+    radial-gradient(ellipse at 50% 0%, var(--glass-highlight) 0%, transparent 60%),
+    var(--glass-warm-bg);
+  backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border:1px solid var(--glass-border);
+  border-radius:var(--radius-md); overflow:hidden;
+  box-shadow:0 2px 8px rgba(0,0,0,0.03), inset 0 1px 0 var(--glass-highlight);
+  transition:box-shadow 0.2s ease; cursor:pointer;
+}
+.card:hover { transform:translateY(-2px); box-shadow:0 4px 16px rgba(0,0,0,0.06), inset 0 1px 0 var(--glass-highlight); }
+
+.img {
+  width:100%; aspect-ratio:4/3; object-fit:cover;
+  filter: drop-shadow(0 0 2px rgba(255,255,255,0.7)) drop-shadow(1px 1px 3px rgba(0,0,0,0.1));
+}
+.placeholder {
+  width:100%; aspect-ratio:4/3; display:flex; align-items:center; justify-content:center;
+}
+
+.body { padding:12px; display:flex; flex-direction:column; gap:6px; }
+.row { display:flex; justify-content:space-between; align-items:center; }
+.tag { padding:2px 8px; border-radius:4px; font-size:0.65rem; font-weight:600; color:#fff; }
+.star { font-size:0.8rem; }
+
+.name { font-size:0.9rem; font-weight:600; }
+.meta { display:flex; gap:6px; font-size:0.75rem; color:var(--text-secondary); font-family:var(--font-mono); }
+
+/* Context menu — liquid glass */
+.ctxMenu {
+  position:fixed; z-index:var(--z-modal);
+  min-width:160px; padding:6px;
+  background:
+    radial-gradient(ellipse at 50% 0%, var(--glass-highlight) 0%, transparent 60%),
+    var(--glass-warm-bg);
+  backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border:1px solid var(--glass-border);
+  border-radius:12px;
+  box-shadow:0 8px 24px rgba(0,0,0,0.06);
+  animation:ctxIn 0.15s ease;
+}
+@keyframes ctxIn { from{opacity:0;transform:scale(0.96)}to{opacity:1;transform:scale(1)}}
+.ctxItem {
+  padding:10px 14px; border-radius:8px; font-size:0.83rem;
+  color:var(--text-primary); cursor:pointer; transition:background 0.15s;
+}
+.ctxItem:hover { background:var(--bg-hover); }
+.ctxDivider { height:1px; background:var(--border-subtle); margin:2px 8px; }
+.ctxDanger {
+  padding:10px 14px; border-radius:8px; font-size:0.83rem;
+  color:var(--error); cursor:pointer; transition:background 0.15s;
+}
+.ctxDanger:hover { background:rgba(248,113,113,0.06); }
+
+/* Detail modal — liquid glass */
+.overlay {
+  position:fixed; inset:0; z-index:var(--z-modal);
+  background:rgba(0,0,0,0.6); display:flex; align-items:center; justify-content:center;
+}
+.detailModal {
+  position:relative; max-width:480px; width:90%; max-height:85vh; overflow-y:auto;
+  background:
+    radial-gradient(ellipse at 50% 0%, var(--glass-highlight) 0%, transparent 60%),
+    var(--glass-warm-bg);
+  backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border:1px solid var(--glass-border);
+  border-radius:20px;
+  box-shadow:0 12px 40px rgba(0,0,0,0.10);
+  animation:ctxIn 0.2s ease;
+}
+.detailClose {
+  position:absolute; top:12px; right:12px; z-index:2;
+  width:32px; height:32px; border-radius:50%;
+  background:rgba(0,0,0,0.4); color:#fff;
+  display:flex; align-items:center; justify-content:center;
+}
+.detailImgWrap { width:100%; }
+.detailImg {
+  width:100%; max-height:350px; object-fit:cover;
+  border-radius:20px 20px 0 0;
+  filter: drop-shadow(0 0 2px rgba(255,255,255,0.7)) drop-shadow(1px 1px 3px rgba(0,0,0,0.1));
+}
+.detailPlaceholder {
+  width:100%; height:250px; display:flex; align-items:center; justify-content:center;
+  border-radius:20px 20px 0 0;
+}
+.detailBody { padding:20px; display:flex; flex-direction:column; gap:8px; }
+.detailTag { display:inline-block; align-self:flex-start; padding:3px 10px; border-radius:5px; font-size:0.7rem; font-weight:600; color:#fff; }
+.detailName { font-size:1.15rem; font-weight:700; }
+.detailMeta { font-size:0.83rem; color:var(--text-secondary); display:flex; gap:6px; }
+
+@media (max-width:640px) { .grid { grid-template-columns:repeat(2,1fr); } }

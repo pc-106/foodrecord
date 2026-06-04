@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 \"C:/Users/69041/.claude/skills/ui-ux-pro-max/scripts/search.py\" \"food health tracking app glassmorphism frosted glass apple liquid\" --design-system -p \"FoodSnap\")",
+      "Read(//c/Users/69041/.claude/skills/liquid glass/node_modules/**)",
+      "Read(//c/Users/69041/.claude/skills/liquid glass/**)"
+    ]
+  }
+}

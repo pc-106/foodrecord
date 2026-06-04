@@ -1,0 +1,145 @@
+/* ================================================================
+   食记簿 — 温润奶白手账风
+   浅色默认 + 深色夜间
+   ================================================================ */
+
+:root {
+  /* ---- 暖白温润浅色 (默认) ---- */
+  --color-primary: #E8966A;
+  --color-primary-light: #F0B890;
+  --color-primary-bg: rgba(232,150,106,0.08);
+  --color-accent: #9BBF8E;
+  --color-accent-bg: rgba(155,191,142,0.08);
+
+  --bg-page: #FDF9F0;
+  --bg-card: rgba(255,255,255,0.55);
+  --bg-sidebar: #ECE0D0;
+  --bg-right-panel: #ECE0D0;
+  --bg-calendar: #F8F4EA;
+  --bg-input: #F5F0E6;
+  --bg-hover: rgba(200,160,120,0.06);
+  --bg-today: linear-gradient(135deg, #FEF3E6, #FCEAD4);
+
+  --text-primary: #332E2A;
+  --text-secondary: #6B645C;
+  --text-tertiary: #9E978E;
+  --text-inverse: #FFFFFF;
+
+  --border-subtle: #E0D8C8;
+  --border-card: #DCD4C2;
+
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.02);
+  --shadow-sm: 0 1px 4px rgba(0,0,0,0.03);
+  --shadow-md: 0 2px 8px rgba(0,0,0,0.04);
+  --shadow-lg: 0 4px 16px rgba(0,0,0,0.05);
+
+  --glass-bg: rgba(255,255,254,0.52);
+  --glass-warm-bg: rgba(236,224,208,0.60);
+  --glass-calendar-bg: rgba(255,252,246,0.62);
+  --glass-blur: 28px;
+  --glass-saturate: 140%;
+  --glass-radius: 24px;
+  --glass-border: rgba(0,0,0,0.08);
+  --glass-border-subtle: rgba(0,0,0,0.05);
+  --glass-shadow: 0 2px 12px rgba(0,0,0,0.04);
+  --glass-highlight: rgba(255,255,255,0.45);
+  --glass-chromatic: linear-gradient(90deg,
+    transparent,
+    rgba(255,190,190,0.30) 15%,
+    rgba(200,190,230,0.25) 35%,
+    rgba(180,210,240,0.30) 55%,
+    rgba(180,230,210,0.22) 75%,
+    transparent
+  );
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 24px;
+
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', 'SF Mono', monospace;
+
+  --sidebar-width: 240px;
+  --right-panel-width: 300px;
+  --topnav-height: 56px;
+
+  --z-sidebar: 100;
+  --z-topnav: 200;
+  --z-overlay: 300;
+  --z-modal: 400;
+}
+
+/* ---- 深色主题 ---- */
+[data-theme="dark"] {
+  --color-primary: #FFB888;
+  --color-primary-light: #FFCCAA;
+  --color-primary-bg: rgba(255,184,136,0.1);
+  --color-accent: #8CB896;
+  --color-accent-bg: rgba(140,184,150,0.08);
+
+  --bg-page: #1E1E20;
+  --bg-card: #2C2C2E;
+  --bg-sidebar: #2C2824;
+  --bg-right-panel: #2C2824;
+  --bg-calendar: #2A2A2D;
+  --bg-input: #333336;
+  --bg-hover: rgba(200,160,120,0.08);
+  --bg-today: linear-gradient(135deg, #3A2A20, #352820);
+
+  --text-primary: #EEEEEE;
+  --text-secondary: #AAAAAA;
+  --text-tertiary: #777777;
+  --text-inverse: #1E1E20;
+
+  --border-subtle: #444448;
+  --border-card: #4A4A4E;
+
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.2);
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.25);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.3);
+  --shadow-lg: 0 8px 32px rgba(0,0,0,0.4);
+
+  --glass-bg: rgba(20,22,28,0.50);
+  --glass-warm-bg: rgba(32,28,24,0.55);
+  --glass-calendar-bg: rgba(28,26,22,0.52);
+  --glass-border: rgba(255,255,255,0.08);
+  --glass-border-subtle: rgba(255,255,255,0.04);
+  --glass-shadow: 0 4px 20px rgba(0,0,0,0.35);
+  --glass-highlight: transparent;
+  --glass-chromatic: linear-gradient(90deg,
+    transparent,
+    rgba(255,255,255,0.03) 20%,
+    rgba(255,255,255,0.02) 50%,
+    rgba(255,255,255,0.03) 80%,
+    transparent
+  );
+}
+
+/* ---- 基础重置 ---- */
+* { margin:0; padding:0; box-sizing:border-box; }
+html { font-size:16px; background:var(--bg-page); -webkit-font-smoothing:antialiased; }
+
+body {
+  font-family:var(--font-sans);
+  color:var(--text-primary);
+  background:var(--bg-page);
+  min-height:100vh;
+  line-height:1.6;
+}
+
+#root { min-height:100vh; }
+
+::-webkit-scrollbar { width:5px; }
+::-webkit-scrollbar-track { background:transparent; }
+::-webkit-scrollbar-thumb { background:var(--border-card); border-radius:4px; }
+
+a { color:var(--color-primary); text-decoration:none; }
+button { font-family:inherit; cursor:pointer; border:none; background:none; color:inherit; -webkit-tap-highlight-color:transparent; touch-action:manipulation; }
+input,textarea,select { font-family:inherit; border:none; outline:none; background:none; color:var(--text-primary); }
+img { max-width:100%; height:auto; display:block; }
+ul,ol { list-style:none; }
+
+h1 { font-size:1.4rem; font-weight:700; }
+h2 { font-size:1.15rem; font-weight:600; }
+h3 { font-size:1rem; font-weight:600; }

@@ -1,0 +1,53 @@
+.container { display:flex; flex-direction:column; gap:20px; }
+.title { font-size:1.4rem; font-weight:700; }
+
+.panels { display:flex; flex-direction:column; gap:20px; }
+
+.section { display:flex; flex-direction:column; gap:8px; }
+.sectionTitle { font-size:0.8rem; font-weight:600; color:var(--text-secondary); text-transform:uppercase; letter-spacing:0.04em; }
+
+.card {
+  background:
+    radial-gradient(ellipse at 50% 0%, var(--glass-highlight) 0%, transparent 65%),
+    var(--glass-warm-bg);
+  backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border:1px solid var(--glass-border);
+  border-radius:var(--radius-md); overflow:hidden;
+  box-shadow:
+    0 4px 20px rgba(0,0,0,0.04),
+    inset 0 1px 0 var(--glass-highlight);
+}
+
+.settingRow {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:14px 16px; font-size:0.88rem; color:var(--text-primary);
+  width:100%; text-align:left; transition:background 0.1s;
+}
+button.settingRow:hover { background:var(--bg-hover); }
+.settingLabel { display:block; font-weight:500; }
+.settingHint { display:block; font-size:0.75rem; color:var(--text-secondary); margin-top:2px; }
+.arrow { color:var(--text-tertiary); font-size:0.9rem; flex-shrink:0; }
+
+.divider { height:1px; background:var(--border-subtle); margin:0 16px; }
+
+.toggleBtn {
+  padding:7px 14px; border-radius:8px; font-size:0.8rem; font-weight:500;
+  background:var(--bg-input); color:var(--text-primary);
+  border:1px solid var(--border-card); transition:all 0.15s; flex-shrink:0;
+}
+.toggleBtn:hover { border-color:var(--color-primary); }
+
+.switch {
+  width:44px; height:26px; border-radius:13px; border:none; cursor:pointer;
+  background:var(--bg-input); padding:3px;
+  display:flex; align-items:center; justify-content:flex-start;
+  flex-shrink:0; transition:background 0.2s;
+}
+.switch div {
+  width:20px; height:20px; border-radius:50%;
+  background:#fff; box-shadow:0 1px 3px rgba(0,0,0,0.15);
+  transition:transform 0.2s;
+}
+.switchOn { background:var(--color-primary); justify-content:flex-end; }
+.toast { padding:10px 16px; border-radius:10px; font-size:0.83rem; color:var(--success); background:var(--glass-warm-bg); backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-saturate)); -webkit-backdrop-filter:blur(var(--glass-blur)) saturate(var(--glass-saturate)); border:1px solid var(--glass-border); box-shadow:0 4px 16px rgba(0,0,0,0.04); }
