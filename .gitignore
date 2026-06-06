@@ -3,3 +3,8 @@ dist
 .env
 subscriptions.json
 *.timestamp*.mjs
+server/node_modules
+server/dist
+temp_uploads
+public/uploads
+.npm-cache
