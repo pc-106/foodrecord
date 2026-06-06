@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>食记簿 - 开发者管理</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: system-ui, sans-serif; background:#1a1a1a; color:#eee; min-height:100vh; display:flex; align-items:center; justify-content:center; }
+  .card { background:#2a2a2a; border-radius:16px; padding:32px; max-width:400px; width:90%; }
+  h1 { font-size:1.3rem; margin-bottom:20px; text-align:center; }
+  input, textarea { width:100%; padding:12px; margin-bottom:12px; border-radius:8px; border:1px solid #444; background:#333; color:#fff; font-size:0.95rem; }
+  textarea { height:80px; resize:vertical; }
+  button { width:100%; padding:14px; background:#E8966A; color:#fff; border:none; border-radius:10px; font-size:1rem; font-weight:600; cursor:pointer; }
+  button:hover { opacity:0.9; }
+  .result { margin-top:12px; padding:10px; border-radius:8px; font-size:0.85rem; text-align:center; }
+  .ok { background:#1a3a1a; color:#4caf50; }
+  .err { background:#3a1a1a; color:#f44336; }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>📢 推送广播</h1>
+  <input id="title" placeholder="通知标题" value="🍽️ 打卡提醒">
+  <textarea id="body" placeholder="通知内容">记得记录今天的美食哦</textarea>
+  <button onclick="send()">发送给所有订阅用户</button>
+  <div id="result"></div>
+</div>
+<script>
+async function send() {
+  const r = document.getElementById('result')
+  const title = document.getElementById('title').value
+  const body = document.getElementById('body').value
+  try {
+    const res = await fetch('/api/notifications/broadcast', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ title, body })
+    })
+    const data = await res.json()
+    r.className = 'result ok'
+    r.textContent = `✅ 已发送给 ${data.sent} 位订阅用户`
+  } catch(e) {
+    r.className = 'result err'
+    r.textContent = '❌ 发送失败，请确认后端已启动'
+  }
+}
+</script>
+</body>
+</html>

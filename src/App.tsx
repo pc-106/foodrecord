@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate, Outlet } from 'react-router-dom
 import { AuthProvider, useAuth } from './contexts/AuthContext'
 import { FoodProvider } from './contexts/FoodContext'
 import { ThemeProvider } from './contexts/ThemeContext'
+import { NotificationProvider } from './contexts/NotificationContext'
 import Welcome from './pages/Welcome'
 import Login from './pages/Login'
 import Register from './pages/Register'
@@ -27,6 +28,7 @@ function App() {
   return (
     <AuthProvider>
       <ThemeProvider>
+        <NotificationProvider>
         <FoodProvider>
           <BrowserRouter>
             <Routes>
@@ -54,6 +56,7 @@ function App() {
             </Routes>
           </BrowserRouter>
         </FoodProvider>
+        </NotificationProvider>
       </ThemeProvider>
     </AuthProvider>
   )

@@ -1,7 +1,4 @@
-import { PrismaClient } from '@prisma/client'
+import { createClient } from '@supabase/supabase-js'
+import { config } from './index.js'
 
-const prisma = new PrismaClient({
-  log: process.env.NODE_ENV === 'development' ? ['warn', 'error'] : ['error'],
-})
-
-export default prisma
+export const supabase = createClient(config.supabase.url, config.supabase.anonKey)

@@ -12,7 +12,6 @@
   box-shadow:
     0 4px 24px rgba(0,0,0,0.05),
     inset 0 -1px 0 rgba(255,255,255,0.1);
-  overflow:hidden;
 }
 /* Chromatic aberration bottom edge */
 .topnav::after {
@@ -164,6 +163,54 @@
   transition:background 0.15s, color 0.15s;
 }
 .iconBtn:hover { background:var(--bg-hover); color:var(--text-primary); }
+
+/* Notification bell */
+.notifWrap { position:relative; }
+.badge {
+  position:absolute; top:2px; right:2px;
+  min-width:16px; height:16px; border-radius:8px;
+  background:#EF4444; color:#fff; font-size:0.6rem; font-weight:700;
+  display:flex; align-items:center; justify-content:center; padding:0 4px;
+}
+.notifBackdrop {
+  position:fixed; inset:0; z-index:499;
+}
+.notifDropdown {
+  position:fixed; top:56px; right:60px; z-index:500;
+  width:340px; max-height:420px; overflow-y:auto;
+  background:rgba(245,240,230,0.72);
+  backdrop-filter:blur(60px) saturate(200%);
+  -webkit-backdrop-filter:blur(60px) saturate(200%);
+  border:1px solid rgba(255,255,255,0.25);
+  border-radius:16px;
+  box-shadow:
+    0 12px 48px rgba(0,0,0,0.12),
+    inset 0 1px 0 rgba(255,255,255,0.5);
+}
+.notifHead {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:12px 14px 8px; font-size:0.8rem; font-weight:600;
+  border-bottom:1px solid var(--border-subtle);
+}
+.notifHead button { font-size:0.72rem; color:var(--color-primary); }
+.notifHead button:hover { opacity:0.7; }
+.notifEmpty { padding:30px 14px; text-align:center; font-size:0.82rem; color:var(--text-tertiary); }
+.notifItem { padding:10px 14px; border-bottom:1px solid var(--border-subtle); transition:background 0.1s; position:relative; }
+.notifItem:hover { background:var(--bg-hover); }
+.notifUnread { background:var(--color-primary-bg); }
+.notifTitle { font-size:0.82rem; font-weight:600; cursor:pointer; padding:2px 0; }
+.notifTitle:hover { color:var(--color-primary); }
+.notifBody { font-size:0.75rem; color:var(--text-secondary); margin-top:4px; padding:8px; background:var(--bg-input); border-radius:6px; line-height:1.5; }
+.notifTime { font-size:0.65rem; color:var(--text-tertiary); margin-top:4px; }
+.delBtn {
+  position:absolute; top:6px; right:8px;
+  padding:3px 10px; border-radius:6px;
+  background:#EF4444; color:#fff; font-size:0.7rem; font-weight:600;
+  z-index:10; cursor:pointer;
+  animation:fadeIn 0.12s ease;
+}
+.delBtn:hover { background:#DC2626; }
+@keyframes fadeIn { from{opacity:0}to{opacity:1} }
 
 @media (max-width:1024px) {
   .menuBtn { display:flex; }

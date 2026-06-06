@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTheme } from '../../contexts/ThemeContext'
 import { useAuth } from '../../contexts/AuthContext'
+import { useNotifications } from '../../contexts/NotificationContext'
 import { supabase } from '../../services/db'
 import { FoodIcon } from '../common/Icons'
 import { getFoodImage } from '../../utils/foodImages'
@@ -23,6 +24,8 @@ const TopNav = ({ onMenuClick }: { onMenuClick?: () => void }) => {
   const [showResults, setShowResults] = useState(false)
   const [detail, setDetail] = useState<SearchResult | null>(null)
   const [mobileSearch, setMobileSearch] = useState(false)
+  const [showNotifs, setShowNotifs] = useState(false)
+  const { notifications, unreadCount, markRead, markAllRead, removeNotification } = useNotifications()
   const searchRef = useRef<HTMLDivElement>(null)
   const headerRef = useRef<HTMLDivElement>(null)
   const [glare, setGlare] = useState({ x: 50, y: 50, o: 0 })
@@ -170,9 +173,55 @@ const TopNav = ({ onMenuClick }: { onMenuClick?: () => void }) => {
           )}
         </button>
 
-        <button className={styles.iconBtn}>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.5 0"/></svg>
-        </button>
+        {/* 通知铃铛 */}
+        <div className={styles.notifWrap}>
+          <button className={styles.iconBtn} onClick={() => setShowNotifs(v => !v)}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.5 0"/></svg>
+            {unreadCount > 0 && <span className={styles.badge}>{unreadCount}</span>}
+          </button>
+
+          {showNotifs && (
+            <>
+              <div className={styles.notifBackdrop} onClick={() => setShowNotifs(false)} />
+              <div className={styles.notifDropdown}>
+                <div className={styles.notifHead}>
+                  <span>消息通知</span>
+                  <button onClick={markAllRead}>全部已读</button>
+                </div>
+                {notifications.length === 0 ? (
+                  <div className={styles.notifEmpty}>暂无消息</div>
+                ) : (
+                  notifications.map(n => (
+                    <div key={n.id} className={`${styles.notifItem} ${!n.read ? styles.notifUnread : ''}`}
+                      onContextMenu={e => {
+                        e.preventDefault()
+                        const target = e.currentTarget as HTMLElement
+                        const existing = target.querySelector(`.${styles.delBtn}`)
+                        if (existing) { existing.remove(); return }
+                        const btn = document.createElement('button')
+                        btn.className = styles.delBtn
+                        btn.textContent = '删除'
+                        btn.onclick = async (ev) => { ev.stopPropagation(); ev.preventDefault()
+                          const { error } = await supabase.from('notifications').delete().eq('id', n.id)
+                          if (!error) { removeNotification(n.id); btn.remove() }
+                        }
+                        target.appendChild(btn)
+                        setTimeout(() => btn.remove(), 4000)
+                      }}>
+                      <div className={styles.notifTitle} onClick={e => {
+                        const body = e.currentTarget.nextElementSibling as HTMLElement
+                        if (body) body.style.display = body.style.display === 'block' ? 'none' : 'block'
+                        if (!n.read) markRead(n.id)
+                      }}>{n.title}</div>
+                      <div className={styles.notifBody} style={{display:'none'}}>{n.body}</div>
+                      <div className={styles.notifTime}>{new Date(n.created_at).toLocaleString('zh-CN')}</div>
+                    </div>
+                  ))
+                )}
+              </div>
+            </>
+          )}
+        </div>
       </div>
     </header>
   )

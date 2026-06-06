@@ -23,12 +23,16 @@ const Gallery = () => {
   const [detail, setDetail] = useState<{ date:string; log:FoodLog } | null>(null)
 
   const load = async () => {
-    const now = new Date()
-    const logs = await fetchLogsByMonth(now.getFullYear(), now.getMonth() + 1)
     const all: GalleryItem[] = []
-    logs.forEach((dayLogs, date) => {
-      dayLogs.forEach(log => all.push({ date, log }))
-    })
+    // 加载最近 12 个月
+    const now = new Date()
+    for (let i = 0; i < 12; i++) {
+      const d = new Date(now.getFullYear(), now.getMonth() - i, 1)
+      const logs = await fetchLogsByMonth(d.getFullYear(), d.getMonth() + 1)
+      logs.forEach((dayLogs, date) => {
+        dayLogs.forEach(log => all.push({ date, log }))
+      })
+    }
     setItems(all.sort((a, b) => b.date.localeCompare(a.date)))
   }
 
@@ -157,9 +161,6 @@ const Gallery = () => {
                 <span>{detail.log.servings} {detail.log.serving_unit}</span>
               </div>
               <div className={styles.detailInfo}>
-                <div className={styles.detailRow}><span>蛋白质</span><span>{detail.log.protein}g</span></div>
-                <div className={styles.detailRow}><span>碳水</span><span>{detail.log.carbs}g</span></div>
-                <div className={styles.detailRow}><span>脂肪</span><span>{detail.log.fat}g</span></div>
                 <div className={styles.detailRow}><span>日期</span><span>{detail.date}</span></div>
               </div>
               <div className={styles.detailActions}>

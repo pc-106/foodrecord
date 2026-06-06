@@ -195,6 +195,30 @@
 .detailName { font-size:1.15rem; font-weight:700; }
 .detailMeta { font-size:0.83rem; color:var(--text-secondary); display:flex; gap:6px; }
 
+/* Nutrition AI card */
+.analyzeBtn {
+  width:100%; padding:8px; border-radius:8px; font-size:0.78rem; font-weight:500;
+  color:var(--color-primary); border:1px dashed var(--color-primary);
+  transition:all 0.15s;
+}
+.analyzeBtn:hover { background:var(--color-primary-bg); }
+.analyzeBtn:disabled { opacity:0.5; }
+.nutritionCard {
+  padding:12px; border-radius:10px;
+  background:var(--color-primary-bg);
+  border:1px solid rgba(232,150,106,0.15);
+}
+.nutritionScore { display:flex; align-items:center; gap:8px; font-size:0.85rem; font-weight:600; margin-bottom:6px; }
+.nutritionScore span:first-child { font-size:1.1rem; }
+.scoreGood { color:#22c55e; }
+.scoreMid { color:#f59e0b; }
+.scoreBad { color:#ef4444; }
+.nutritionText { font-size:0.78rem; color:var(--text-secondary); margin-bottom:8px; line-height:1.5; }
+.nutritionTips { display:flex; flex-direction:column; gap:4px; }
+.nutritionTips span { font-size:0.75rem; color:var(--text-primary); }
+.nutritionWarn { margin-top:6px; display:flex; flex-direction:column; gap:3px; }
+.nutritionWarn span { font-size:0.75rem; color:#ef4444; }
+
 @media (max-width:480px) {
   .summary { flex-direction:column; align-items:stretch; }
   .ringWrap { margin:0 auto; }

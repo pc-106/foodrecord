@@ -3,7 +3,29 @@
     "allow": [
       "Bash(npx vite *)",
       "Bash(npm uninstall *)",
-      "Bash(curl -s http://localhost:3000)"
+      "Bash(curl -s http://localhost:3000)",
+      "Bash(npx tsx *)",
+      "Bash(pkill -f \"tsx.*server\")",
+      "Bash(curl -s -X POST http://localhost:4000/api/nutrition/analyze -H \"Content-Type: application/json\" -d '{\"foodName\":\"鸡胸肉\",\"mealType\":\"food\",\"servings\":1,\"calories\":250}')",
+      "Bash(curl -s \"http://localhost:4000/api/foods/search?q=鸡\")",
+      "Bash(netstat -ano)",
+      "Bash(awk '{print $5}')",
+      "Bash(xargs -I{} taskkill //F //PID {})",
+      "Bash(pkill -f \"tsx\")",
+      "Bash(curl -sv http://localhost:4000/api/health)",
+      "Bash(curl -s -X POST http://localhost:4000/api/nutrition/analyze -H \"Content-Type: application/json\" -d '{\"foodName\":\"鸡胸肉\"}')",
+      "Bash(powershell -Command 'Get-NetTCPConnection -LocalPort 4000 -ErrorAction SilentlyContinue | ForEach-Object { Stop-Process -Id $_.OwningProcess -Force }')",
+      "Bash(curl -s -X POST http://localhost:4000/api/nutrition/analyze -H \"Content-Type: application/json\" -d '{\"foodName\":\"鸡胸肉\",\"calories\":250}')",
+      "Bash(taskkill //F //IM node.exe)",
+      "Bash(nohup npx tsx src/server.ts)",
+      "Bash(cat /tmp/server.log 2>/dev/null || echo \"no log\")",
+      "Read(//tmp/**)",
+      "Bash(npx web-push *)",
+      "Bash(npx --yes web-push generate-vapid-keys)",
+      "Bash(curl -s http://localhost:4000/admin)",
+      "Bash(curl -s -X POST http://localhost:4000/api/notifications/broadcast -H \"Content-Type: application/json\" -d \"{\\\\\"title\\\\\":\\\\\"test\\\\\",\\\\\"body\\\\\":\\\\\"hello\\\\\"}\")",
+      "Bash(curl -s http://localhost:4000/api/notifications/subscribers)",
+      "Bash(curl -s -X POST http://localhost:4000/api/notifications/broadcast -H \"Content-Type: application/json\" -d \"{\\\\\"title\\\\\":\\\\\"🍽️ 测试通知\\\\\",\\\\\"body\\\\\":\\\\\"如果你看到这条消息，说明配置成功！\\\\\"}\")"
     ]
   }
 }
