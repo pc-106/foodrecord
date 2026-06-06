@@ -237,6 +237,36 @@ const DateDetail = () => {
               </div>
             )}
 
+            {/* AI Nutrition — always visible when food name entered */}
+            {(food || query.trim()) && (
+              <>
+                <button className={styles.analyzeBtn} onClick={analyzeNutrition} disabled={analyzing}>
+                  {analyzing ? '⏳ 分析中...' : nutrition ? '🔄 重新分析' : '🤖 AI 营养分析'}
+                </button>
+                {nutrition && (
+                  <div className={styles.nutritionCard}>
+                    <div className={styles.nutritionScore}>
+                      <span className={nutrition.score >= 60 ? styles.scoreGood : nutrition.score >= 40 ? styles.scoreMid : styles.scoreBad}>
+                        {nutrition.score}分
+                      </span>
+                      <span>{nutrition.level}</span>
+                    </div>
+                    <div className={styles.nutritionText}>{nutrition.analysis}</div>
+                    {nutrition.suggestions?.length > 0 && (
+                      <div className={styles.nutritionTips}>
+                        {nutrition.suggestions.map((s: string, i: number) => <span key={i}>💡 {s}</span>)}
+                      </div>
+                    )}
+                    {nutrition.warnings?.length > 0 && (
+                      <div className={styles.nutritionWarn}>
+                        {nutrition.warnings.map((w: string, i: number) => <span key={i}>⚠️ {w}</span>)}
+                      </div>
+                    )}
+                  </div>
+                )}
+              </>
+            )}
+
             {/* Servings */}
             <div className={styles.row}>
               <span className={styles.rowLabel}>份量</span>
@@ -271,31 +301,6 @@ const DateDetail = () => {
               </div>
             </div>
 
-            {/* Nutrition AI */}
-            <button className={styles.analyzeBtn} onClick={analyzeNutrition} disabled={analyzing}>
-              {analyzing ? '分析中...' : nutrition ? '🔄 重新分析' : '🤖 AI 营养分析'}
-            </button>
-            {nutrition && (
-              <div className={styles.nutritionCard}>
-                <div className={styles.nutritionScore}>
-                  <span className={nutrition.score >= 60 ? styles.scoreGood : nutrition.score >= 40 ? styles.scoreMid : styles.scoreBad}>
-                    {nutrition.score}分
-                  </span>
-                  <span>{nutrition.level}</span>
-                </div>
-                <div className={styles.nutritionText}>{nutrition.analysis}</div>
-                {nutrition.suggestions?.length > 0 && (
-                  <div className={styles.nutritionTips}>
-                    {nutrition.suggestions.map((s: string, i: number) => <span key={i}>💡 {s}</span>)}
-                  </div>
-                )}
-                {nutrition.warnings?.length > 0 && (
-                  <div className={styles.nutritionWarn}>
-                    {nutrition.warnings.map((w: string, i: number) => <span key={i}>⚠️ {w}</span>)}
-                  </div>
-                )}
-              </div>
-            )}
             {/* Favorite */}
             <button className={`${styles.favBtn} ${favorite?styles.favOn:''}`} onClick={()=>setFavorite(!favorite)}>
               {favorite ? '⭐' : '☆'} {favorite?'已收藏':'收藏'}
