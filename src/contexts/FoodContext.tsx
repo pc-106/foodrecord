@@ -47,6 +47,50 @@ function toFoodLog(db: DBFoodLog): FoodLog {
 }
 
 const monthCache = new Map<string, Map<string, FoodLog[]>>()
+const dateCache = new Map<string, FoodLog[]>()
+
+// 从 localStorage 恢复缓存
+function loadCache(uid: string) {
+  try {
+    const raw = localStorage.getItem(`foodcache_${uid}`)
+    if (!raw) return
+    const { monthKeys, dateKeys } = JSON.parse(raw)
+    for (const k of monthKeys) {
+      const d = localStorage.getItem(`foodcache_m_${uid}_${k}`)
+      if (d) {
+        const map = new Map<string, FoodLog[]>()
+        JSON.parse(d).forEach(([date, logs]: [string, FoodLog[]]) => map.set(date, logs))
+        monthCache.set(k, map)
+      }
+    }
+    for (const k of dateKeys) {
+      const d = localStorage.getItem(`foodcache_d_${uid}_${k}`)
+      if (d) dateCache.set(k, JSON.parse(d))
+    }
+  } catch {}
+}
+
+function saveMonthCache(uid: string, key: string, map: Map<string, FoodLog[]>) {
+  try {
+    const arr = Array.from(map.entries())
+    localStorage.setItem(`foodcache_m_${uid}_${key}`, JSON.stringify(arr))
+    const raw = localStorage.getItem(`foodcache_${uid}`)
+    const meta = raw ? JSON.parse(raw) : { monthKeys: [], dateKeys: [] }
+    if (!meta.monthKeys.includes(key)) { meta.monthKeys.push(key); localStorage.setItem(`foodcache_${uid}`, JSON.stringify(meta)) }
+  } catch {}
+}
+
+export function clearUserCache(uid: string) {
+  try {
+    const raw = localStorage.getItem(`foodcache_${uid}`)
+    if (raw) {
+      const { monthKeys, dateKeys } = JSON.parse(raw)
+      monthKeys.forEach((k: string) => localStorage.removeItem(`foodcache_m_${uid}_${k}`))
+      dateKeys.forEach((k: string) => localStorage.removeItem(`foodcache_d_${uid}_${k}`))
+      localStorage.removeItem(`foodcache_${uid}`)
+    }
+  } catch {}
+}
 
 const FoodProviderInner: React.FC<{ children: ReactNode }> = ({ children }) => {
   const { user } = useAuth()
@@ -56,18 +100,22 @@ const FoodProviderInner: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [error] = useState<string | null>(null)
   const prevUid = React.useRef(uid)
 
-  // 用户切换时清除缓存和状态，防止数据混淆
   if (prevUid.current !== uid) {
-    monthCache.clear()
-    setLogs([])
+    monthCache.clear(); dateCache.clear(); setLogs([])
     prevUid.current = uid
+    loadCache(uid)
   }
 
   const fetchLogsByDate = async (date: string) => {
+    const cached = dateCache.get(date)
+    if (cached) { setLogs(cached); return }
     setIsLoading(true)
     try {
       const result = await getFoodLogsByDate(uid, date)
-      setLogs(result.map(toFoodLog))
+      const mapped = result.map(toFoodLog)
+      setLogs(mapped)
+      dateCache.set(date, mapped)
+      try { localStorage.setItem(`foodcache_d_${uid}_${date}`, JSON.stringify(mapped)) } catch {}
     } catch {}
     setIsLoading(false)
   }
@@ -76,25 +124,25 @@ const FoodProviderInner: React.FC<{ children: ReactNode }> = ({ children }) => {
     const key = `${uid}_${year}_${String(month).padStart(2,'0')}`
     const cached = monthCache.get(key)
     if (cached) return cached
-
     try {
       const result = await getFoodLogsByMonth(uid, year, month)
       const map = new Map<string, FoodLog[]>()
       result.forEach((v, k) => map.set(k, v.map(toFoodLog)))
       monthCache.set(key, map)
+      saveMonthCache(uid, key, map)
       return map
     } catch { return new Map() }
   }
 
-  const updateMonthCache = (date: string, log: FoodLog) => {
+  const invalidateMonthCache = (date: string) => {
     const [y, m] = date.split('-')
-    const key = `${uid}_${y}_${m}`
-    const cached = monthCache.get(key)
-    if (cached) {
-      const arr = cached.get(date) || []
-      arr.push(log)
-      cached.set(date, arr)
-    }
+    const key = `${uid}_${y}_${String(m).padStart(2,'0')}`
+    monthCache.delete(key)
+    dateCache.delete(date)
+    try {
+      localStorage.removeItem(`foodcache_m_${uid}_${key}`)
+      localStorage.removeItem(`foodcache_d_${uid}_${date}`)
+    } catch {}
   }
 
   const addFoodLog = async (data: Omit<FoodLog, 'id' | 'created_at' | 'updated_at'>) => {
@@ -102,28 +150,16 @@ const FoodProviderInner: React.FC<{ children: ReactNode }> = ({ children }) => {
     try {
       const now = new Date().toISOString()
       const dbLog: DBFoodLog = {
-        id: Date.now().toString(),
-        user_id: uid,
-        food_name: data.food_name,
-        meal_type: data.meal_type,
-        servings: data.servings,
-        serving_unit: data.serving_unit,
-        calories: data.calories,
-        protein: data.protein,
-        carbs: data.carbs,
-        fat: data.fat,
-        image_url: data.image_url,
-        notes: data.notes,
-        is_favorite: data.is_favorite ?? false,
-        logged_at: data.logged_at,
-        date: data.date,
-        created_at: now,
-        updated_at: now,
+        id: Date.now().toString(), user_id: uid, food_name: data.food_name, meal_type: data.meal_type,
+        servings: data.servings, serving_unit: data.serving_unit, calories: data.calories,
+        protein: data.protein, carbs: data.carbs, fat: data.fat,
+        image_url: data.image_url, notes: data.notes, is_favorite: data.is_favorite ?? false,
+        logged_at: data.logged_at, date: data.date, created_at: now, updated_at: now,
       }
       await dbAdd(dbLog)
       const nl = toFoodLog(dbLog)
       setLogs(prev => [...prev, nl])
-      updateMonthCache(data.date, nl)
+      invalidateMonthCache(data.date)
     } catch {}
     setIsLoading(false)
   }
@@ -131,11 +167,16 @@ const FoodProviderInner: React.FC<{ children: ReactNode }> = ({ children }) => {
   const updateFoodLog = (id: string, data: Partial<FoodLog>) => {
     dbUpdate(id, data)
     setLogs(prev => prev.map(l => l.id === id ? { ...l, ...data, updated_at: new Date().toISOString() } : l))
+    // 清除相关缓存
+    const target = logs.find(l => l.id === id)
+    if (target) invalidateMonthCache(target.date)
   }
 
   const deleteFoodLog = (id: string) => {
+    const target = logs.find(l => l.id === id)
     dbDelete(id)
     setLogs(prev => prev.filter(l => l.id !== id))
+    if (target) invalidateMonthCache(target.date)
   }
 
   const searchFoods = async (q: string): Promise<Food[]> => {

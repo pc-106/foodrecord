@@ -24,15 +24,18 @@ const Gallery = () => {
 
   const load = async () => {
     const all: GalleryItem[] = []
-    // 加载最近 12 个月
     const now = new Date()
-    for (let i = 0; i < 12; i++) {
+    // 并行加载最近 12 个月
+    const promises = Array.from({ length: 12 }, (_, i) => {
       const d = new Date(now.getFullYear(), now.getMonth() - i, 1)
-      const logs = await fetchLogsByMonth(d.getFullYear(), d.getMonth() + 1)
+      return fetchLogsByMonth(d.getFullYear(), d.getMonth() + 1)
+    })
+    const results = await Promise.all(promises)
+    results.forEach(logs => {
       logs.forEach((dayLogs, date) => {
         dayLogs.forEach(log => all.push({ date, log }))
       })
-    }
+    })
     setItems(all.sort((a, b) => b.date.localeCompare(a.date)))
   }
 
