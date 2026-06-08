@@ -1,158 +1,107 @@
-# FoodSnap - 智能饮食记录应用
+# 食记簿 — 美食打卡与营养管理
 
-## 🍽️ 项目简介
+## 项目简介
 
-FoodSnap 是一款简洁美观的日常饮食记录应用，采用现代玻璃拟态（Glassmorphism）设计风格，通过日历视图直观展示每日饮食记录，支持拍照上传、热量统计和智能饮食推荐。
+全栈饮食记录应用。日历打卡、美食图库、数据报表、AI 营养分析、抠图拍照、浏览器推送通知。
 
-## ✨ 主要功能
+## 技术栈
 
-- 📅 **日历视图** - 直观展示每日饮食记录
-- 🔥 **热量追踪** - 精准记录每餐热量摄入
-- 🤖 **智能推荐** - 基于饮食习惯的个性化建议
-- 📸 **拍照记录** - 记录食物照片
-- 📊 **统计图表** - 可视化分析饮食数据
-- 👤 **个人中心** - 管理个人目标和偏好
+| 层级 | 技术 |
+|------|------|
+| 前端 | React 18 · TypeScript · Vite · Recharts |
+| 后端 | Express · Sharp · Web Push · DeepSeek API |
+| 数据库 | Supabase (PostgreSQL) |
+| 样式 | CSS Modules · 液态玻璃设计系统 · 浅深双主题 |
 
-## 🎨 设计特点
+## 功能
 
-- **玻璃拟态 UI** - 半透明背景、模糊效果、微妙的边框发光
-- **响应式设计** - 完美适配手机、平板和桌面端
-- **流畅动画** - 精心设计的交互动效
-- **现代色彩系统** - 靛蓝紫主色调，粉红和翠绿辅助
+- **日历打卡** — 月历视图，食物贴纸，悬停弹窗
+- **美食图库** — 12 个月历史，分类筛选，名称搜索
+- **食记报表** — 打卡趋势折线图、品类柱状图、饮食名称饼图、明细表格
+- **AI 营养分析** — DeepSeek API 实时评分 + 本地算法兜底
+- **拍照抠图** — Canvas 背景移除，白边描边贴纸效果
+- **收藏美食** — 收藏列表，服务器端精确查询
+- **推送通知** — Web Push 每日打卡提醒 + 每周报告推送
+- **个人主页** — 用户信息、编辑资料、账户管理
+- **系统设置** — 主题切换、通知开关、数据导出
 
-## 🛠️ 技术栈
-
-### 前端
-- **React 18** + **TypeScript** - 类型安全的前端框架
-- **Vite** - 快速构建工具
-- **React Router v6** - 路由管理
-- **CSS Modules** - 模块化样式
-- **date-fns** - 日期处理
-
-### 后端（可选扩展）
-- **Node.js** + **Express**
-- **Supabase** - 数据库和认证
-- **Prisma** - ORM
-
-## 🚀 快速开始
-
-### 安装依赖
+## 快速开始
 
 ```bash
+# 前端
 npm install
+npm run dev          # http://localhost:3000
+
+# 后端
+cd server
+npm install
+npm run dev          # http://localhost:4000
 ```
 
-### 开发模式
+## 环境变量
 
-```bash
-npm run dev
+`.env` 文件：
+
+```
+VITE_SUPABASE_URL=          # Supabase 项目 URL
+VITE_SUPABASE_ANON_KEY=     # Supabase 匿名密钥
+VITE_VAPID_PUBLIC_KEY=      # Web Push 公钥
+VAPID_PRIVATE_KEY=          # Web Push 私钥
+DEEPSEEK_API_KEY=           # DeepSeek API Key
 ```
 
-应用将在 `http://localhost:3000` 启动。
-
-### 构建生产版本
-
-```bash
-npm run build
-```
-
-### 预览生产版本
-
-```bash
-npm run preview
-```
-
-## 📁 项目结构
+## 项目结构
 
 ```
 foodrecord/
 ├── src/
-│   ├── components/          # React 组件
-│   │   ├── common/         # 通用组件（Button, Input, GlassCard）
-│   │   └── layout/         # 布局组件（Layout, Navigation）
-│   ├── contexts/            # React Context
-│   ├── pages/               # 页面组件
-│   ├── types/               # TypeScript 类型定义
-│   ├── App.tsx             # 应用主组件
-│   ├── main.tsx             # 入口文件
-│   └── index.css            # 全局样式
-├── public/                  # 静态资源
-├── package.json
-├── vite.config.ts
-└── tsconfig.json
+│   ├── components/
+│   │   ├── common/          # Icons, GlassCard
+│   │   └── layout/          # Layout, TopNav, Sidebar, RightPanel, Navigation
+│   ├── contexts/            # Auth, Food, Theme, Notification
+│   ├── pages/               # Home, Gallery, Favorites, Report, Profile, Settings, Camera, DateDetail, Account, Login, Register, Welcome
+│   ├── services/            # Supabase 数据库操作
+│   ├── utils/               # 食物图片映射, 图片压缩, 推送通知
+│   └── types/               # TypeScript 类型
+├── server/
+│   └── src/
+│       ├── routes/          # API 路由
+│       ├── services/        # 营养分析, 图片处理, 推送, 定时任务
+│       └── config/          # Supabase 客户端
+├── public/
+│   ├── foods/               # 食物图片库 (12张)
+│   ├── sw.js                # Service Worker
+│   └── admin.html           # 通知管理面板
+└── dist/                    # 构建输出
 ```
 
-## 🎯 核心组件
+## 构建部署
 
-### 玻璃卡片 (GlassCard)
-采用玻璃拟态设计风格的卡片组件，支持半透明背景、模糊效果和悬浮动画。
-
-### 底部导航 (Navigation)
-液态玻璃材质的底部导航栏，包含首页、统计、添加、推荐、我的五个导航项。
-
-### 日历视图 (CalendarView)
-展示月度日历，支持日期选择、月份切换、今日高亮和有记录日期标记。
-
-## 🔐 数据存储
-
-当前版本使用 localStorage 存储数据：
-- 用户信息
-- 饮食记录
-- 应用设置
-
-未来版本将集成 Supabase 云数据库，支持多设备同步。
-
-## 📱 响应式断点
-
-- **手机** (`< 480px`) - 单列布局
-- **平板** (`768px - 1024px`) - 双列布局
-- **桌面** (`> 1024px`) - 多列布局，最大宽度限制
-
-## 🎨 设计系统
-
-### 色彩系统
-- **主色**: `#6366F1` (靛蓝紫)
-- **次要色**: `#EC4899` (粉红)
-- **强调色**: `#10B981` (翠绿)
-
-### 字体
-- **标题**: Playfair Display
-- **正文**: Inter
-- **数据**: JetBrains Mono
-
-### 间距
-基于 4px 的倍数系统：`4px, 8px, 16px, 24px, 32px, 48px, 64px`
-
-## 🔧 开发规范
-
-### 代码规范
-- 使用 ESLint 进行代码检查
-- 使用 Prettier 格式化代码
-- 遵循 TypeScript 最佳实践
-
-### Git 提交规范
-```
-feat: 新功能
-fix: 修复 bug
-docs: 文档更新
-style: 代码格式
-refactor: 重构
-test: 测试
-chore: 构建/工具
+```bash
+npm run build        # 输出到 dist/
 ```
 
-## 📄 许可证
+`dist/` 可直接部署到 Vercel、Netlify、阿里云 OSS 等平台。
 
-MIT License
+## Supabase 表结构
 
-## 🤝 贡献
+执行以下 SQL 创建通知表：
 
-欢迎提交 Issue 和 Pull Request！
+```sql
+CREATE TABLE notifications (
+  id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+  title TEXT NOT NULL,
+  body TEXT DEFAULT '',
+  read BOOLEAN DEFAULT FALSE,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+ALTER TABLE notifications ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "允许读取" ON notifications FOR SELECT USING (true);
+CREATE POLICY "允许插入" ON notifications FOR INSERT WITH CHECK (true);
+CREATE POLICY "允许更新" ON notifications FOR UPDATE USING (true);
+CREATE POLICY "允许删除" ON notifications FOR DELETE USING (true);
+```
 
-## 📧 联系方式
+## 管理面板
 
-如有问题，请联系开发者。
-
----
-
-**Made with ❤️ using React + TypeScript**
+后端启动后访问 `http://localhost:4000/admin` 发送推送通知。
